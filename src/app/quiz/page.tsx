@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { questions } from "@/data/questions";
@@ -17,12 +17,12 @@ export default function QuizPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  // Initialize anonymous auth (Optional)
-  useState(() => {
+  // Initialize anonymous auth with proper effect
+  useEffect(() => {
     signInAnonymously(auth).catch((err) => {
       console.warn("Anonymous auth disabled in Firebase Console. Using fallback ID.");
     });
-  });
+  }, []);
 
   const currentQuestion = questions[currentIndex];
   const progress = ((currentIndex + 1) / questions.length) * 100;
@@ -42,13 +42,18 @@ export default function QuizPage() {
     setIsSubmitting(true);
 
     // Cinematic Delay for better immersion
-    await new Promise(resolve => setTimeout(resolve, 2500));
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     try {
       const mbtiType = calculateMBTI(finalAnswers);
       const resultData = results[mbtiType];
 
-      const docRef = await addDoc(collection(db, "assessment_results"), {
+      // 5-second timeout wrapper for Firestore
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error("Firestore Timeout")), 5000)
+      );
+
+      const addDocPromise = addDoc(collection(db, "assessment_results"), {
         userId: auth.currentUser?.uid || "anonymous_" + Math.random().toString(36).substr(2, 9),
         mbtiType,
         answers: Object.values(finalAnswers).map(a => (a === 'A' ? 0 : 1)),
@@ -57,9 +62,12 @@ export default function QuizPage() {
         vibe: resultData.vibe,
       });
 
+      // Race between the database write and a 5s timeout
+      const docRef = await Promise.race([addDocPromise, timeoutPromise]) as any;
+
       router.push(`/results/${docRef.id}`);
     } catch (error) {
-      console.info("Firestore is currently restricted. Switching to Local Wisdom mode...", error);
+      console.warn("Connection issue or restricted. Switching to Local Wisdom mode...", error);
 
       const mbtiType = calculateMBTI(finalAnswers);
       const resultData = results[mbtiType];
