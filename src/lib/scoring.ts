@@ -1,28 +1,24 @@
 import { questions } from "@/data/questions";
 
 export const calculateMBTI = (answers: Record<number, 'A' | 'B'>): string => {
-  const scores = {
-    Energy: { A: 0, B: 0 },
-    Information: { A: 0, B: 0 },
-    Decision: { A: 0, B: 0 },
-    Lifestyle: { A: 0, B: 0 },
+  const scores: Record<string, number> = {
+    E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0
   };
 
   questions.forEach((q) => {
     const answer = answers[q.id];
     if (answer) {
-      scores[q.dimension][answer]++;
+      const value = q.options[answer].value;
+      if (value in scores) {
+        scores[value]++;
+      }
     }
   });
 
-  const getDimensionLetter = (dimension: keyof typeof scores, letterA: string, letterB: string) => {
-    return scores[dimension].A >= 3 ? letterA : letterB;
-  };
-
-  const dim1 = getDimensionLetter('Energy', 'E', 'I');
-  const dim2 = getDimensionLetter('Information', 'S', 'N');
-  const dim3 = getDimensionLetter('Decision', 'T', 'F');
-  const dim4 = getDimensionLetter('Lifestyle', 'J', 'P');
+  const dim1 = scores.E >= scores.I ? 'E' : 'I';
+  const dim2 = scores.N >= scores.S ? 'N' : 'S';
+  const dim3 = scores.T >= scores.F ? 'T' : 'F';
+  const dim4 = scores.J >= scores.P ? 'J' : 'P';
 
   return `${dim1}${dim2}${dim3}${dim4}`;
 };
