@@ -13,11 +13,6 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Diagnostic log for Production debugging
-if (typeof window !== "undefined" && !firebaseConfig.apiKey) {
-  console.warn("⚠️ Firebase Configuration Missing: Please ensure NEXT_PUBLIC_FIREBASE_API_KEY is set in your Environment Variables.");
-}
-
 // Initialize Firebase
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 const db = getFirestore(app);
