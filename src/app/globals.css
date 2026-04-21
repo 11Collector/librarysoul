@@ -1,26 +1,127 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ghibli-green: #2d5a27;
+  --color-ghibli-leaf: #5b8c5a;
+  --color-ghibli-cream: #fdfcf0;
+  --color-ghibli-wood: #7c4c3e;
+  --color-ghibli-sky: #35a7da;
+  --color-ghibli-sunset: #d48c00;
+  --color-ghibli-ink: #2c3e50;
+
+  --font-pixel: 'Kanit', sans-serif;
+  --font-cozy: 'Kanit', sans-serif;
+  --font-classic: 'Kanit', sans-serif;
+  --font-kanit: 'Kanit', sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #fdfcf0;
+  --foreground: #2d5a27;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-kanit), sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Watercolor Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.15;
+  z-index: 9999;
+  background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  mix-blend-mode: multiply;
+}
+
+.ghibli-organic {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.ghibli-organic-alt {
+  border-radius: 30% 70% 70% 30% / 50% 40% 60% 50%;
+}
+
+.ghibli-card {
+  @apply bg-white/70 backdrop-blur-md rounded-[2rem] p-8 border border-white/40 shadow-2xl;
+  box-shadow: 20px 20px 60px #d7d6cc, -20px -20px 60px #ffffff;
+}
+
+.ghibli-button {
+  @apply relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-300;
+  background: linear-gradient(135deg, #2d5a27 0%, #5b8c5a 100%);
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(45, 90, 39, 0.3);
+}
+
+.ghibli-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 90, 39, 0.4);
+  filter: brightness(1.1);
+}
+
+.ghibli-button:active {
+  transform: translateY(1px);
+}
+
+.hand-drawn-border {
+  border: 3px solid #2d5a27;
+  mask-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 L100 0 L100 100 L0 100 Z' stroke='black' stroke-width='10' fill='none'/%3E%3C/svg%3E");
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+/* Soft Animations */
+@keyframes sway {
+  0% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(5deg);
+  }
+}
+
+.animate-sway {
+  animation: sway 4s ease-in-out infinite alternate;
+}
+
+@keyframes float-soft {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.animate-float-soft {
+  animation: float-soft 6s ease-in-out infinite;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fdfcf0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5b8c5a;
+  border-radius: 10px;
+  border: 2px solid #fdfcf0;
 }
