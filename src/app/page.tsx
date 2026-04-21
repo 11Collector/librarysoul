@@ -157,6 +157,16 @@ export default function LandingPage() {
             <span className="text-sm font-bold tracking-widest uppercase font-kanit">True Destiny</span>
           </div>
         </motion.div>
+
+        {/* Disclaimer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ delay: 2.2 }}
+          className="mt-12 text-[10px] font-kanit tracking-widest text-ghibli-ink uppercase"
+        >
+          Disclaimer : ประเมินเพื่อความสนุกเท่านั้น
+        </motion.div>
       </div>
 
       {/* Atmospheric Grass Decoration */}
