@@ -13,7 +13,7 @@ import { results } from "@/data/results";
 
 export default function QuizPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, 'A' | 'B'>>({});
+  const [answers, setAnswers] = useState<Record<number, 'A' | 'B' | 'C'>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
@@ -27,7 +27,7 @@ export default function QuizPage() {
   const currentQuestion = questions[currentIndex];
   const progress = ((currentIndex + 1) / questions.length) * 100;
 
-  const handleAnswer = async (value: 'A' | 'B') => {
+  const handleAnswer = async (value: 'A' | 'B' | 'C') => {
     const newAnswers = { ...answers, [currentQuestion.id]: value };
     setAnswers(newAnswers);
 
@@ -39,7 +39,7 @@ export default function QuizPage() {
     }
   };
 
-  const finishQuiz = async (finalAnswers: Record<number, 'A' | 'B'>) => {
+  const finishQuiz = async (finalAnswers: Record<number, 'A' | 'B' | 'C'>) => {
     setIsSubmitting(true);
 
     // Cinematic Delay for better immersion
@@ -57,7 +57,7 @@ export default function QuizPage() {
       const addDocPromise = addDoc(collection(db, "assessment_results"), {
         userId: auth.currentUser?.uid || "anonymous_" + Math.random().toString(36).substr(2, 9),
         mbtiType,
-        answers: Object.values(finalAnswers).map(a => (a === 'A' ? 0 : 1)),
+        answers: Object.values(finalAnswers).map(a => (a === 'A' ? 0 : a === 'B' ? 1 : 2)),
         timestamp: serverTimestamp(),
         readingClass: resultData.title,
         vibe: resultData.vibe,
@@ -124,10 +124,10 @@ export default function QuizPage() {
               <motion.div
                 key={p}
                 animate={{
-                  scale: Math.ceil((currentIndex + 1) / 5) === p ? [1, 1.2, 1] : 1,
-                  opacity: Math.ceil((currentIndex + 1) / 5) >= p ? 1 : 0.2
+                  scale: Math.ceil((currentIndex + 1) / 3) === p ? [1, 1.2, 1] : 1,
+                  opacity: Math.ceil((currentIndex + 1) / 3) >= p ? 1 : 0.2
                 }}
-                className={`h-2 w-10 rounded-xl ${Math.ceil((currentIndex + 1) / 5) >= p ? 'bg-ghibli-green' : 'bg-ghibli-green/40'
+                className={`h-2 w-10 rounded-xl ${Math.ceil((currentIndex + 1) / 3) >= p ? 'bg-ghibli-green' : 'bg-ghibli-green/40'
                   }`}
               />
             ))}
@@ -188,24 +188,24 @@ export default function QuizPage() {
                   {currentQuestion.text}
                 </h2>
 
-                <div className="grid gap-4 md:gap-6">
-                  {(['A', 'B'] as const).map((opt, i) => (
+                <div className="grid gap-3 md:gap-4">
+                  {(['A', 'B', 'C'] as const).map((opt, i) => (
                     <motion.button
                       key={opt}
                       initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.2 + (i * 0.1) }}
-                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileHover={{ scale: 1.02, y: -1 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => handleAnswer(opt)}
                       disabled={isSubmitting}
-                      className="rounded-2xl p-4 sm:p-8 text-left bg-white/60 border-2 border-ghibli-green/10 hover:border-ghibli-green/40 hover:bg-white transition-all shadow-md hover:shadow-xl group flex items-center justify-between"
+                      className="rounded-2xl p-4 sm:p-5 md:p-6 text-left bg-white/60 border-2 border-ghibli-green/10 hover:border-ghibli-green/40 hover:bg-white transition-all shadow-md hover:shadow-xl group flex items-center justify-between"
                     >
-                      <span className="text-base sm:text-xl md:text-2xl font-kanit font-medium text-ghibli-ink/90 leading-tight pr-4">
+                      <span className="text-sm sm:text-base md:text-lg lg:text-xl font-kanit font-medium text-ghibli-ink/90 leading-tight pr-4">
                         {currentQuestion.options[opt].text}
                       </span>
-                      <div className="flex-shrink-0 w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 border-ghibli-green/10 group-hover:bg-ghibli-green group-hover:border-ghibli-green transition-all flex items-center justify-center">
-                        <Wind className="text-ghibli-green group-hover:text-white transition-colors size-4 sm:size-6" />
+                      <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-ghibli-green/10 group-hover:bg-ghibli-green group-hover:border-ghibli-green transition-all flex items-center justify-center">
+                        <Wind className="text-ghibli-green group-hover:text-white transition-colors size-4 sm:size-5" />
                       </div>
                     </motion.button>
                   ))}
