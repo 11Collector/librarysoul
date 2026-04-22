@@ -48,7 +48,7 @@ export default function LandingPage() {
           className="flex flex-col items-center"
         >
           <div className="inline-block px-6 py-2 bg-ghibli-green/10 rounded-full mb-8 backdrop-blur-sm border border-ghibli-green/20">
-            <p className="font-kanit text-ghibli-green font-medium tracking-widest text-sm uppercase">
+            <p className="font-kanit text-ghibli-green font-medium tracking-widest text-xs uppercase">
               ✨ UPSKILL EVERYDAY PRESENTS ✨
             </p>
           </div>
@@ -80,8 +80,8 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-ghibli-sunset/20 blur-[60px] rounded-full scale-75 animate-pulse" />
           </motion.div>
 
-          <h1 className="text-5xl sm:text-6xl md:text-9xl font-pixel text-ghibli-green mb-8 leading-[1.1] relative">
-            Library of <br />
+          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-pixel text-ghibli-green mb-8 leading-[1.1] relative whitespace-nowrap">
+            Library of{" "}
             <span className="text-ghibli-wood italic relative">
               Souls
               <motion.span
@@ -99,7 +99,7 @@ export default function LandingPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 1 }}
-          className="text-xl md:text-3xl text-ghibli-ink/80 mb-16 font-classic leading-relaxed max-w-2xl mx-auto italic"
+          className="text-lg md:text-2xl text-ghibli-ink/80 mb-16 font-classic leading-relaxed max-w-2xl mx-auto italic"
         >
           "ค้นหาความลับที่ซ่อนอยู่ในจิตวิญญาณผ่านหน้ากระดาษที่สะท้อนตัวตนจริงของคุณ"
         </motion.p>
@@ -115,7 +115,7 @@ export default function LandingPage() {
           >
             <Link
               href="/quiz"
-              className="ghibli-button group text-2xl md:text-3xl py-8 px-16 shadow-2xl relative overflow-hidden"
+              className="ghibli-button group text-xl md:text-2xl py-6 px-12 shadow-2xl relative overflow-hidden"
             >
               <motion.div
                 animate={{ x: ["-100%", "200%"] }}
@@ -123,7 +123,7 @@ export default function LandingPage() {
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
               />
               <span className="flex items-center gap-6 relative z-10">
-                <Compass className="group-hover:rotate-180 transition-transform duration-500" size={32} />
+                <Compass className="group-hover:rotate-180 transition-transform duration-500" size={28} />
                 เริ่มต้นการเดินทาง
                 <Wind className="group-hover:translate-x-2 transition-transform" />
               </span>
@@ -140,7 +140,7 @@ export default function LandingPage() {
         >
           <div className="flex flex-col items-center gap-3">
             <div className="p-4 bg-white/50 rounded-2xl shadow-inner">
-              <span className="font-pixel text-4xl">20</span>
+              <span className="font-pixel text-4xl">12</span>
             </div>
             <span className="text-sm font-bold tracking-widest uppercase font-kanit">Ancient Questions</span>
           </div>
