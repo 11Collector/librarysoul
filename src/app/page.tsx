@@ -80,8 +80,8 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-ghibli-sunset/20 blur-[60px] rounded-full scale-75 animate-pulse" />
           </motion.div>
 
-          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-pixel text-ghibli-green mb-8 leading-[1.1] relative whitespace-nowrap">
-            Library of{" "}
+          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-pixel text-ghibli-green mb-8 leading-[1.1] relative">
+            Library of <br />
             <span className="text-ghibli-wood italic relative">
               Souls
               <motion.span
@@ -99,23 +99,23 @@ export default function LandingPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 1 }}
-          className="text-lg md:text-2xl text-ghibli-ink/80 mb-16 font-classic leading-relaxed max-w-2xl mx-auto italic"
+          className="text-base md:text-2xl text-ghibli-ink/80 mb-12 font-classic leading-relaxed max-w-2xl mx-auto italic px-4"
         >
-          "ค้นหาความลับที่ซ่อนอยู่ในจิตวิญญาณผ่านหน้ากระดาษที่สะท้อนตัวตนจริงของคุณ"
+          "ค้นหาความลับที่ซ่อนอยู่ในจิตวิญญาณ <br /> ผ่านหน้ากระดาษที่สะท้อนตัวตนจริงของคุณ"
         </motion.p>
 
-        <div className="flex justify-center w-full">
+        <div className="flex justify-center w-full px-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
-            className="inline-block"
+            className="w-full max-w-xs sm:w-auto"
           >
             <Link
               href="/quiz"
-              className="ghibli-button group text-xl md:text-2xl py-6 px-12 shadow-2xl relative overflow-hidden"
+              className="ghibli-button group text-lg md:text-2xl py-4 px-8 md:py-6 md:px-12 shadow-2xl relative overflow-hidden flex items-center justify-center w-full"
             >
               <motion.div
                 animate={{ x: ["-100%", "200%"] }}
