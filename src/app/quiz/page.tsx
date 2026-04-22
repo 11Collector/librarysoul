@@ -180,15 +180,15 @@ export default function QuizPage() {
               </div>
 
               <div className="text-center">
-                <div className="mb-8 opacity-20">
-                  <Quote size={60} className="mx-auto text-ghibli-green" />
+                <div className="mb-4 md:mb-8 opacity-20">
+                  <Quote size={40} className="mx-auto text-ghibli-green sm:size-[60px]" />
                 </div>
 
-                <h2 className="text-xl sm:text-2xl md:text-4xl font-classic font-medium text-ghibli-ink mb-12 leading-relaxed">
+                <h2 className="text-lg sm:text-2xl md:text-4xl font-classic font-medium text-ghibli-ink mb-8 md:mb-12 leading-relaxed">
                   {currentQuestion.text}
                 </h2>
 
-                <div className="grid gap-6">
+                <div className="grid gap-4 md:gap-6">
                   {(['A', 'B'] as const).map((opt, i) => (
                     <motion.button
                       key={opt}
@@ -199,13 +199,13 @@ export default function QuizPage() {
                       whileTap={{ scale: 0.98 }}
                       onClick={() => handleAnswer(opt)}
                       disabled={isSubmitting}
-                      className="rounded-2xl p-6 sm:p-8 text-left bg-white/60 border-2 border-ghibli-green/10 hover:border-ghibli-green/40 hover:bg-white transition-all shadow-md hover:shadow-xl group flex items-center justify-between"
+                      className="rounded-2xl p-4 sm:p-8 text-left bg-white/60 border-2 border-ghibli-green/10 hover:border-ghibli-green/40 hover:bg-white transition-all shadow-md hover:shadow-xl group flex items-center justify-between"
                     >
-                      <span className="text-lg sm:text-xl md:text-2xl font-kanit font-medium text-ghibli-ink/90 leading-tight pr-4">
+                      <span className="text-base sm:text-xl md:text-2xl font-kanit font-medium text-ghibli-ink/90 leading-tight pr-4">
                         {currentQuestion.options[opt].text}
                       </span>
-                      <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-ghibli-green/10 group-hover:bg-ghibli-green group-hover:border-ghibli-green transition-all flex items-center justify-center">
-                        <Wind className="text-ghibli-green group-hover:text-white transition-colors" size={20} className="sm:size-[24px]" />
+                      <div className="flex-shrink-0 w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 border-ghibli-green/10 group-hover:bg-ghibli-green group-hover:border-ghibli-green transition-all flex items-center justify-center">
+                        <Wind className="text-ghibli-green group-hover:text-white transition-colors size-4 sm:size-6" />
                       </div>
                     </motion.button>
                   ))}

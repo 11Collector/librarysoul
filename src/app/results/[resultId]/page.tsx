@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { results, ResultType } from "@/data/results";
-import { Share2, RefreshCw, Home, Sparkles, Wand2, BookOpen, Wind, Star, Download, Eye, AlertCircle, Zap } from "lucide-react";
+import { Share2, RefreshCw, Home, Sparkles, Wand2, BookOpen, Wind, Star, Download, Eye, AlertCircle, Zap, Users } from "lucide-react";
 import { toPng } from "html-to-image";
 import Image from "next/image";
 

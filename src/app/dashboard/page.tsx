@@ -80,8 +80,8 @@ export default function DashboardPage() {
     <main className="min-h-screen bg-ghibli-cream p-4 md:p-12 font-kanit">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8 md:mb-12 gap-6">
+          <div className="flex flex-col md:flex-row items-center text-center md:text-left gap-4">
             <Link href="/">
               <motion.button
                 whileHover={{ scale: 1.1 }}
@@ -92,11 +92,11 @@ export default function DashboardPage() {
               </motion.button>
             </Link>
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-ghibli-ink flex items-center gap-3">
+              <h1 className="text-2xl md:text-4xl font-bold text-ghibli-ink flex items-center justify-center md:justify-start gap-3">
                 <BarChart3 className="text-ghibli-green" />
                 Soul Statistics
               </h1>
-              <p className="text-ghibli-ink/60">คลังสถิติวิญญาณนักอ่านทั่วโลก</p>
+              <p className="text-ghibli-ink/60 text-sm md:text-base">คลังสถิติวิญญาณนักอ่านทั่วโลก</p>
             </div>
           </div>
 
@@ -128,7 +128,7 @@ export default function DashboardPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white p-8 rounded-3xl shadow-xl flex items-center gap-6 border border-ghibli-green/5"
+            className="bg-white p-6 md:p-8 rounded-3xl shadow-xl flex items-center gap-6 border border-ghibli-green/5"
           >
             <div className="p-4 bg-ghibli-sky/10 text-ghibli-sky rounded-2xl">
               <Users size={32} />
@@ -145,7 +145,7 @@ export default function DashboardPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white p-8 rounded-3xl shadow-xl flex items-center gap-6 border border-ghibli-green/5"
+            className="bg-white p-6 md:p-8 rounded-3xl shadow-xl flex items-center gap-6 border border-ghibli-green/5"
           >
             <div className="p-4 bg-ghibli-sunset/10 text-ghibli-sunset rounded-2xl">
               <TrendingUp size={32} />
@@ -162,7 +162,7 @@ export default function DashboardPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white p-8 rounded-3xl shadow-xl flex items-center gap-6 border border-ghibli-green/5"
+            className="bg-white p-6 md:p-8 rounded-3xl shadow-xl flex items-center gap-6 border border-ghibli-green/5"
           >
             <div className="p-4 bg-ghibli-leaf/10 text-ghibli-leaf rounded-2xl">
               <Sparkles size={32} />
