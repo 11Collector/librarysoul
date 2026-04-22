@@ -34,6 +34,7 @@ export default function QuizPage() {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
+      // Don't increment index, but trigger the finish logic
       await finishQuiz(newAnswers);
     }
   };
@@ -42,14 +43,14 @@ export default function QuizPage() {
     setIsSubmitting(true);
 
     // Cinematic Delay for better immersion
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     try {
       const mbtiType = calculateMBTI(finalAnswers);
       const resultData = results[mbtiType];
 
       // 5-second timeout wrapper for Firestore
-      const timeoutPromise = new Promise((_, reject) => 
+      const timeoutPromise = new Promise((_, reject) =>
         setTimeout(() => reject(new Error("Firestore Timeout")), 5000)
       );
 
@@ -82,9 +83,8 @@ export default function QuizPage() {
 
       localStorage.setItem('library_of_souls_latest', JSON.stringify(localResult));
       router.push(`/results/local`);
-    } finally {
-      setIsSubmitting(false);
     }
+    // Removed finally block to prevent "flash" of quiz page before navigation completes
   };
 
   const handleBack = () => {
@@ -165,52 +165,54 @@ export default function QuizPage() {
       <div className="flex-1 flex items-center justify-center relative z-10 px-4">
 
         <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 1.05, y: -20 }}
-            transition={{ duration: 0.5, type: "spring", damping: 20 }}
-            className="ghibli-card max-w-2xl w-full relative overflow-visible"
-          >
-            {/* Corner Decorations */}
-            <div className="absolute -top-4 -right-4 text-ghibli-sunset animate-float-soft">
-              <Sparkles size={32} />
-            </div>
-
-            <div className="text-center">
-              <div className="mb-8 opacity-20">
-                <Quote size={60} className="mx-auto text-ghibli-green" />
+          {!isSubmitting && (
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 1.05, y: -20 }}
+              transition={{ duration: 0.5, type: "spring", damping: 20 }}
+              className="ghibli-card max-w-2xl w-full relative overflow-visible"
+            >
+              {/* Corner Decorations */}
+              <div className="absolute -top-4 -right-4 text-ghibli-sunset animate-float-soft">
+                <Sparkles size={32} />
               </div>
 
-              <h2 className="text-2xl md:text-4xl font-classic font-medium text-ghibli-ink mb-12 leading-relaxed">
-                {currentQuestion.text}
-              </h2>
+              <div className="text-center">
+                <div className="mb-8 opacity-20">
+                  <Quote size={60} className="mx-auto text-ghibli-green" />
+                </div>
 
-              <div className="grid gap-6">
-                {(['A', 'B'] as const).map((opt, i) => (
-                  <motion.button
-                    key={opt}
-                    initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 + (i * 0.1) }}
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => handleAnswer(opt)}
-                    disabled={isSubmitting}
-                    className="rounded-2xl p-8 text-left bg-white/60 border-2 border-ghibli-green/10 hover:border-ghibli-green/40 hover:bg-white transition-all shadow-md hover:shadow-xl group flex items-center justify-between"
-                  >
-                    <span className="text-xl md:text-2xl font-kanit font-medium text-ghibli-ink/90 leading-tight pr-4">
-                      {currentQuestion.options[opt].text}
-                    </span>
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full border-2 border-ghibli-green/10 group-hover:bg-ghibli-green group-hover:border-ghibli-green transition-all flex items-center justify-center">
-                      <Wind className="text-ghibli-green group-hover:text-white transition-colors" size={24} />
-                    </div>
-                  </motion.button>
-                ))}
+                <h2 className="text-xl sm:text-2xl md:text-4xl font-classic font-medium text-ghibli-ink mb-12 leading-relaxed">
+                  {currentQuestion.text}
+                </h2>
+
+                <div className="grid gap-6">
+                  {(['A', 'B'] as const).map((opt, i) => (
+                    <motion.button
+                      key={opt}
+                      initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.2 + (i * 0.1) }}
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => handleAnswer(opt)}
+                      disabled={isSubmitting}
+                      className="rounded-2xl p-6 sm:p-8 text-left bg-white/60 border-2 border-ghibli-green/10 hover:border-ghibli-green/40 hover:bg-white transition-all shadow-md hover:shadow-xl group flex items-center justify-between"
+                    >
+                      <span className="text-lg sm:text-xl md:text-2xl font-kanit font-medium text-ghibli-ink/90 leading-tight pr-4">
+                        {currentQuestion.options[opt].text}
+                      </span>
+                      <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-ghibli-green/10 group-hover:bg-ghibli-green group-hover:border-ghibli-green transition-all flex items-center justify-center">
+                        <Wind className="text-ghibli-green group-hover:text-white transition-colors" size={20} className="sm:size-[24px]" />
+                      </div>
+                    </motion.button>
+                  ))}
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
 

@@ -56,13 +56,13 @@ export default function ResultPage() {
   const handleDownloadImage = async () => {
     if (cardRef.current === null) return;
     setIsExporting(true);
-    
+
     try {
       // 1. Wait for all animations to settle
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       const element = cardRef.current;
-      
+
       // 2. Perform the export with professional "Safe Zone" configuration
       const dataUrl = await toPng(element, {
         cacheBust: true,
@@ -78,7 +78,7 @@ export default function ResultPage() {
           alignItems: 'center',
           background: '#fdfcf0'
         },
-        pixelRatio: 3, 
+        pixelRatio: 3,
         skipFonts: false,
       });
 
@@ -94,13 +94,13 @@ export default function ResultPage() {
     } catch (err) {
       console.error('Image export failed:', err);
       try {
-         const dataUrl = await toPng(cardRef.current, { backgroundColor: '#fdfcf0', pixelRatio: 2, skipFonts: true });
-         const link = document.createElement('a');
-         link.download = `library-of-souls-result.png`;
-         link.href = dataUrl;
-         link.click();
+        const dataUrl = await toPng(cardRef.current, { backgroundColor: '#fdfcf0', pixelRatio: 2, skipFonts: true });
+        const link = document.createElement('a');
+        link.download = `library-of-souls-result.png`;
+        link.href = dataUrl;
+        link.click();
       } catch (retryErr) {
-         alert('ขออภัย! ระบบบันทึกรูปขัดข้อง กรุณาใช้การแคปหน้าจอแทนนะครับ');
+        alert('ขออภัย! ระบบบันทึกรูปขัดข้อง กรุณาใช้การแคปหน้าจอแทนนะครับ');
       }
     } finally {
       setIsExporting(false);
@@ -173,177 +173,178 @@ export default function ResultPage() {
                 </p>
               </div>
 
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              <div className="inline-block px-4 py-1 bg-ghibli-green/5 rounded-lg mb-4">
-                <h2 className="text-sm font-kanit font-bold text-ghibli-green/40 tracking-widest uppercase">
-                  CLASS: {resultData?.mbtiType}
-                </h2>
-              </div>
-              <h1 className="text-4xl md:text-7xl font-kanit font-bold text-ghibli-green mb-10 leading-tight">
-                {soulType.title}
-              </h1>
-            </motion.div>
-
-            {/* Illustration Area - Enhanced Magical Vibe */}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.6, type: "spring", damping: 15 }}
-              className="relative mb-16 group"
-            >
-              {/* Magical Sunburst Glow */}
-              <div className="absolute inset-0 flex items-center justify-center -z-10">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="w-[300px] h-[300px] bg-gradient-to-r from-ghibli-sunset/20 via-ghibli-sky/20 to-ghibli-leaf/20 rounded-full blur-[60px] opacity-60"
-                />
-                <div className="absolute w-[250px] h-[250px] bg-white opacity-40 rounded-full blur-[40px]" />
-              </div>
-
-              <div className="w-full min-h-[400px] md:min-h-[600px] flex items-center justify-center relative py-10">
-                <motion.div
-                  animate={{
-                    y: [0, -20, 0],
-                    rotate: [-3, 3, -3],
-                    scale: [1, 1.03, 1]
-                  }}
-                  transition={{
-                    duration: 7,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="relative w-[320px] h-[400px] md:w-[550px] md:h-[680px] z-10"
-                >
-                  <Image
-                    src={soulType.bookImage}
-                    alt={soulType.title}
-                    fill
-                    className="object-contain filter drop-shadow-[0_20px_60px_rgba(45,90,39,0.4)]"
-                    priority
-                  />
-                </motion.div>
-
-                {/* Floating Magical Orbs */}
-                <motion.div animate={{ y: [0, -20, 0], opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 4, repeat: Infinity }} className="absolute top-0 right-10 text-ghibli-sunset"><Sparkles size={48} /></motion.div>
-                <motion.div animate={{ y: [0, 20, 0], opacity: [0.2, 0.5, 0.2] }} transition={{ duration: 5, repeat: Infinity }} className="absolute bottom-10 left-10 text-ghibli-leaf"><Wind size={56} /></motion.div>
-                <motion.div
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0, 1, 0],
-                    x: [0, 50, 0],
-                    y: [0, -50, 0]
-                  }}
-                  transition={{ duration: 8, repeat: Infinity, delay: 1 }}
-                  className="absolute top-20 left-20 text-ghibli-sky/40"
-                >
-                  <Sparkles size={24} />
-                </motion.div>
-              </div>
-
-              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-10 py-4 rounded-2xl shadow-xl border border-ghibli-green/10 z-20">
-                <span className="font-kanit italic text-xl text-ghibli-wood whitespace-nowrap">
-                  "{soulType.vibe}"
-                </span>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="text-left bg-ghibli-cream/40 p-8 md:p-12 rounded-[2rem] border border-white/60 shadow-inner relative mb-12"
-            >
-              <div className="absolute -top-4 left-8 bg-white px-4 py-1 rounded-full border border-ghibli-green/20 shadow-sm">
-                <h3 className="font-kanit font-bold text-[10px] text-ghibli-wood tracking-widest uppercase">Soul Fragment</h3>
-              </div>
-              <p className="text-xl md:text-2xl font-kanit font-semibold text-ghibli-ink leading-relaxed italic text-center md:text-left">
-                {soulType.description}
-              </p>
-            </motion.div>
-
-            {/* Analytical Columns */}
-            <div className="space-y-8 mt-12 text-left">
-              {/* Insight Section */}
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="bg-ghibli-green/[0.08] border border-ghibli-green/20 rounded-2xl p-6 md:p-8 flex items-start gap-4 hover:bg-ghibli-green/[0.12] transition-colors group shadow-sm"
-              >
-                <div className="p-3 bg-ghibli-green text-white rounded-xl shadow-lg group-hover:scale-110 transition-transform flex-shrink-0">
-                  <Eye size={24} />
-                </div>
-                <div>
-                  <h3 className="font-kanit font-bold text-ghibli-green text-sm tracking-widest uppercase mb-2">วิเคราะห์เจาะลึก</h3>
-                  <p className="font-kanit text-lg md:text-xl text-ghibli-ink font-medium leading-relaxed">
-                    {soulType.insight}
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Shadow Point Section */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="bg-ghibli-sunset/[0.08] border border-ghibli-sunset/20 rounded-2xl p-6 md:p-8 flex items-start gap-4 hover:bg-ghibli-sunset/[0.12] transition-colors group shadow-sm"
-              >
-                <div className="p-3 bg-ghibli-sunset text-white rounded-xl shadow-lg group-hover:scale-110 transition-transform flex-shrink-0">
-                  <AlertCircle size={24} />
-                </div>
-                <div>
-                  <h3 className="font-kanit font-bold text-ghibli-sunset text-sm tracking-widest uppercase mb-2">จุดบอดที่ต้องระวัง</h3>
-                  <p className="font-kanit text-lg md:text-xl text-ghibli-ink font-medium leading-relaxed">
-                    {soulType.weakness}
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Upskill Quest Section - Enhanced Readability */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="bg-ghibli-sky/[0.08] border-2 border-ghibli-sky/30 rounded-[2rem] p-8 md:p-10 relative overflow-hidden group hover:bg-ghibli-sky/[0.12] transition-all duration-500 shadow-md"
               >
-                {/* Decorative Background Element */}
-                <div className="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-700">
-                  <Zap size={120} className="text-ghibli-sky" />
+                <div className="inline-block px-4 py-1 bg-ghibli-green/5 rounded-lg mb-4">
+                  <h2 className="text-sm font-kanit font-bold text-ghibli-green/40 tracking-widest uppercase">
+                    CLASS: {resultData?.mbtiType}
+                  </h2>
+                </div>
+                <h1 className="text-4xl md:text-7xl font-kanit font-bold text-ghibli-green mb-0 leading-tight">
+                  {soulType.title}
+                </h1>
+              </motion.div>
+
+              {/* Illustration Area - Enhanced Magical Vibe */}
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.6, type: "spring", damping: 15 }}
+                className="relative mb-18 group"
+              >
+                {/* Magical Sunburst Glow */}
+                <div className="absolute inset-0 flex items-center justify-center -z-10">
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="w-[300px] h-[300px] bg-gradient-to-r from-ghibli-sunset/20 via-ghibli-sky/20 to-ghibli-leaf/20 rounded-full blur-[60px] opacity-60"
+                  />
+                  <div className="absolute w-[250px] h-[250px] bg-white opacity-40 rounded-full blur-[40px]" />
                 </div>
 
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-6 relative z-10">
-                  <div className="p-5 bg-ghibli-sky text-white rounded-2xl shadow-lg group-hover:rotate-12 transition-transform flex-shrink-0">
-                    <Zap size={32} />
-                  </div>
-                  <div className="flex-1 text-center md:text-left">
-                    <div className="inline-block px-3 py-1 bg-ghibli-sky/20 rounded-full mb-3">
-                      <h3 className="font-kanit font-bold text-[10px] text-ghibli-sky tracking-widest uppercase">ภารกิจอัปสกิล</h3>
-                    </div>
-                    {/* Darker Sky color for the main title as requested */}
-                    <h4 className="text-2xl md:text-4xl font-kanit font-bold text-ghibli-sky mb-4 leading-tight">
-                      {soulType.upskillTitle}
-                    </h4>
-                    <div className="h-[2px] w-16 bg-ghibli-sky/40 mb-6 mx-auto md:mx-0" />
-                    <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl border border-ghibli-sky/10 shadow-inner">
-                       <p className="font-kanit text-lg md:text-2xl text-ghibli-ink leading-relaxed font-medium">
-                          {soulType.upskillDetail}
-                       </p>
-                    </div>
-                  </div>
+                <div className="w-full min-h-[300px] md:min-h-[500px] flex items-center justify-center relative py-0">
+                  <motion.div
+                    animate={{
+                      y: [0, -20, 0],
+                      rotate: [-3, 3, -3],
+                      scale: [1, 1.03, 1]
+                    }}
+                    transition={{
+                      duration: 7,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className="relative w-[360px] h-[300px] md:w-[650px] md:h-[500px] z-10"
+                  >
+                    <Image
+                      src={soulType.bookImage}
+                      alt={soulType.title}
+                      fill
+                      sizes="(max-width: 768px) 360px, 650px"
+                      className="object-contain filter drop-shadow-[0_20px_60px_rgba(45,90,39,0.4)]"
+                      priority
+                    />
+                  </motion.div>
+
+                  {/* Floating Magical Orbs */}
+                  <motion.div animate={{ y: [0, -20, 0], opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 4, repeat: Infinity }} className="absolute top-0 right-10 text-ghibli-sunset"><Sparkles size={48} /></motion.div>
+                  <motion.div animate={{ y: [0, 20, 0], opacity: [0.2, 0.5, 0.2] }} transition={{ duration: 5, repeat: Infinity }} className="absolute bottom-10 left-10 text-ghibli-leaf"><Wind size={56} /></motion.div>
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0, 1, 0],
+                      x: [0, 50, 0],
+                      y: [0, -50, 0]
+                    }}
+                    transition={{ duration: 8, repeat: Infinity, delay: 1 }}
+                    className="absolute top-20 left-20 text-ghibli-sky/40"
+                  >
+                    <Sparkles size={24} />
+                  </motion.div>
+                </div>
+
+                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-10 py-4 rounded-2xl shadow-xl border border-ghibli-green/10 z-20">
+                  <span className="font-kanit italic text-xl text-ghibli-wood whitespace-nowrap">
+                    "{soulType.vibe}"
+                  </span>
                 </div>
               </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="text-left bg-ghibli-cream/40 p-8 md:p-12 rounded-[2rem] border border-white/60 shadow-inner relative mb-12"
+              >
+                <div className="absolute -top-4 left-8 bg-white px-4 py-1 rounded-full border border-ghibli-green/20 shadow-sm">
+                  <h3 className="font-kanit font-bold text-[10px] text-ghibli-wood tracking-widest uppercase">Soul Fragment</h3>
+                </div>
+                <p className="text-lg sm:text-xl md:text-2xl font-kanit font-semibold text-ghibli-ink leading-relaxed italic text-center md:text-left">
+                  {soulType.description}
+                </p>
+              </motion.div>
+
+              {/* Analytical Columns */}
+              <div className="space-y-8 mt-12 text-left">
+                {/* Insight Section */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  className="bg-ghibli-green/[0.08] border border-ghibli-green/20 rounded-2xl p-6 md:p-8 flex items-start gap-4 hover:bg-ghibli-green/[0.12] transition-colors group shadow-sm"
+                >
+                  <div className="p-3 bg-ghibli-green text-white rounded-xl shadow-lg group-hover:scale-110 transition-transform flex-shrink-0">
+                    <Eye size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-kanit font-bold text-ghibli-green text-sm tracking-widest uppercase mb-2">วิเคราะห์เจาะลึก</h3>
+                    <p className="font-kanit text-base sm:text-lg md:text-xl text-ghibli-ink font-medium leading-relaxed">
+                      {soulType.insight}
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* Shadow Point Section */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                  className="bg-ghibli-sunset/[0.08] border border-ghibli-sunset/20 rounded-2xl p-6 md:p-8 flex items-start gap-4 hover:bg-ghibli-sunset/[0.12] transition-colors group shadow-sm"
+                >
+                  <div className="p-3 bg-ghibli-sunset text-white rounded-xl shadow-lg group-hover:scale-110 transition-transform flex-shrink-0">
+                    <AlertCircle size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-kanit font-bold text-ghibli-sunset text-sm tracking-widest uppercase mb-2">จุดบอดที่ต้องระวัง</h3>
+                    <p className="font-kanit text-base sm:text-lg md:text-xl text-ghibli-ink font-medium leading-relaxed">
+                      {soulType.weakness}
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* Upskill Quest Section - Enhanced Readability */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 }}
+                  className="bg-ghibli-sky/[0.08] border-2 border-ghibli-sky/30 rounded-[2rem] p-8 md:p-10 relative overflow-hidden group hover:bg-ghibli-sky/[0.12] transition-all duration-500 shadow-md"
+                >
+                  {/* Decorative Background Element */}
+                  <div className="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-700">
+                    <Zap size={120} className="text-ghibli-sky" />
+                  </div>
+
+                  <div className="flex flex-col md:flex-row items-center md:items-start gap-6 relative z-10">
+                    <div className="p-5 bg-ghibli-sky text-white rounded-2xl shadow-lg group-hover:rotate-12 transition-transform flex-shrink-0">
+                      <Zap size={32} />
+                    </div>
+                    <div className="flex-1 text-center md:text-left">
+                      <div className="inline-block px-3 py-1 bg-ghibli-sky/20 rounded-full mb-3">
+                        <h3 className="font-kanit font-bold text-[10px] text-ghibli-sky tracking-widest uppercase">ภารกิจอัปสกิล</h3>
+                      </div>
+                      {/* Darker Sky color for the main title as requested */}
+                      <h4 className="text-2xl md:text-4xl font-kanit font-bold text-ghibli-sky mb-4 leading-tight">
+                        {soulType.upskillTitle}
+                      </h4>
+                      <div className="h-[2px] w-16 bg-ghibli-sky/40 mb-6 mx-auto md:mx-0" />
+                      <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl border border-ghibli-sky/10 shadow-inner">
+                        <p className="font-kanit text-base sm:text-lg md:text-xl text-ghibli-ink leading-relaxed font-medium">
+                          {soulType.upskillDetail}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
         {/* Action Buttons - Standardized Height for All Devices */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
@@ -381,9 +382,9 @@ export default function ResultPage() {
             className="bg-gradient-to-r from-ghibli-green to-ghibli-leaf text-white rounded-2xl min-h-[80px] px-4 flex items-center justify-center gap-3 shadow-xl transition-all font-kanit group relative overflow-hidden w-full"
           >
             <motion.div
-              animate={{ 
+              animate={{
                 scale: [1, 1.2, 1],
-                rotate: [0, 10, -10, 0] 
+                rotate: [0, 10, -10, 0]
               }}
               transition={{ duration: 2, repeat: Infinity }}
             >

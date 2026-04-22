@@ -56,12 +56,12 @@ export default function LandingPage() {
           {/* Magical Book Hero Illustration - Relocated Below Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ 
-              opacity: 1, 
+            animate={{
+              opacity: 1,
               y: [0, -10, 0],
               scale: 1
             }}
-            transition={{ 
+            transition={{
               opacity: { duration: 1.2 },
               y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
               scale: { duration: 1.2 }
@@ -69,8 +69,8 @@ export default function LandingPage() {
             className="mb-8 relative"
           >
             <div className="relative z-10 w-[240px] h-[240px] md:w-[320px] md:h-[320px] drop-shadow-[0_25px_50px_rgba(45,90,39,0.3)]">
-              <Image 
-                src="/assets/book_hero.png" 
+              <Image
+                src="/assets/book_hero.png"
                 alt="Magical Library of Souls Book"
                 fill
                 className="object-contain"
@@ -80,7 +80,7 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-ghibli-sunset/20 blur-[60px] rounded-full scale-75 animate-pulse" />
           </motion.div>
 
-          <h1 className="text-6xl md:text-9xl font-pixel text-ghibli-green mb-8 leading-[1.1] relative">
+          <h1 className="text-5xl sm:text-6xl md:text-9xl font-pixel text-ghibli-green mb-8 leading-[1.1] relative">
             Library of <br />
             <span className="text-ghibli-wood italic relative">
               Souls
@@ -89,7 +89,7 @@ export default function LandingPage() {
                 transition={{ duration: 3, repeat: Infinity }}
                 className="absolute -top-4 -right-8 text-ghibli-sunset"
               >
-                <Sparkles size={40} />
+                <Sparkles size={32} className="md:size-[40px]" />
               </motion.span>
             </span>
           </h1>

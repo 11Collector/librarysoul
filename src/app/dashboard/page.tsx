@@ -5,13 +5,13 @@ import { db } from "@/lib/firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { results, ResultType } from "@/data/results";
 import { motion } from "framer-motion";
-import { 
-  BarChart3, 
-  Users, 
-  BookOpen, 
-  RefreshCw, 
-  ArrowLeft, 
-  CheckCircle2, 
+import {
+  BarChart3,
+  Users,
+  BookOpen,
+  RefreshCw,
+  ArrowLeft,
+  CheckCircle2,
   AlertCircle,
   TrendingUp,
   Sparkles
@@ -35,12 +35,12 @@ export default function DashboardPage() {
   const fetchStats = async () => {
     setLoading(true);
     setConnectionStatus('testing');
-    
+
     try {
       const q = query(collection(db, "assessment_results"), orderBy("timestamp", "desc"));
       const querySnapshot = await getDocs(q);
       setConnectionStatus('online');
-      
+
       const counts: Record<string, number> = {};
       let totalCount = 0;
 
@@ -101,17 +101,16 @@ export default function DashboardPage() {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className={`px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium border shadow-sm ${
-              connectionStatus === 'online' ? 'bg-green-50 text-green-700 border-green-200' :
-              connectionStatus === 'offline' ? 'bg-red-50 text-red-700 border-red-200' :
-              'bg-blue-50 text-blue-700 border-blue-200 animate-pulse'
-            }`}>
-              {connectionStatus === 'online' ? <CheckCircle2 size={16} /> : 
-               connectionStatus === 'offline' ? <AlertCircle size={16} /> : 
-               <RefreshCw size={16} className="animate-spin" />}
-              {connectionStatus === 'online' ? 'Firebase Online' : 
-               connectionStatus === 'offline' ? 'Connection Error' : 
-               'Testing Connection...'}
+            <div className={`px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium border shadow-sm ${connectionStatus === 'online' ? 'bg-green-50 text-green-700 border-green-200' :
+                connectionStatus === 'offline' ? 'bg-red-50 text-red-700 border-red-200' :
+                  'bg-blue-50 text-blue-700 border-blue-200 animate-pulse'
+              }`}>
+              {connectionStatus === 'online' ? <CheckCircle2 size={16} /> :
+                connectionStatus === 'offline' ? <AlertCircle size={16} /> :
+                  <RefreshCw size={16} className="animate-spin" />}
+              {connectionStatus === 'online' ? 'Firebase Online' :
+                connectionStatus === 'offline' ? 'Connection Error' :
+                  'Testing Connection...'}
             </div>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -126,7 +125,7 @@ export default function DashboardPage() {
 
         {/* Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="bg-white p-8 rounded-3xl shadow-xl flex items-center gap-6 border border-ghibli-green/5"
@@ -142,7 +141,7 @@ export default function DashboardPage() {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -159,7 +158,7 @@ export default function DashboardPage() {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -196,13 +195,13 @@ export default function DashboardPage() {
               >
                 <div className="p-6 flex items-center gap-4 border-b border-ghibli-green/5">
                   <div className="relative w-16 h-16 bg-ghibli-cream rounded-xl overflow-hidden shadow-inner flex items-center justify-center text-3xl">
-                     {/* We use image if exists, else fallback to emoji */}
-                     <Image 
-                        src={item.data.bookImage}
-                        alt={item.type}
-                        fill
-                        className="object-contain p-2"
-                     />
+                    {/* We use image if exists, else fallback to emoji */}
+                    <Image
+                      src={item.data.bookImage}
+                      alt={item.type}
+                      fill
+                      className="object-contain p-2"
+                    />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-ghibli-ink text-lg leading-tight">{item.data.title}</h3>
@@ -213,7 +212,7 @@ export default function DashboardPage() {
                     <p className="text-ghibli-ink/40 text-xs font-bold uppercase">{item.count} Souls</p>
                   </div>
                 </div>
-                
+
                 {/* Progress Bar */}
                 <div className="px-6 py-4 bg-ghibli-cream/50">
                   <div className="h-3 w-full bg-white rounded-full overflow-hidden shadow-inner border border-ghibli-green/10">
@@ -227,19 +226,19 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="p-6 pt-0 mt-auto">
-                    <p className="text-sm text-ghibli-ink/70 italic line-clamp-2">
-                        "{item.data.vibe}"
-                    </p>
+                  <p className="text-sm text-ghibli-ink/70 italic line-clamp-2">
+                    "{item.data.vibe}"
+                  </p>
                 </div>
               </motion.div>
             )) : (
               <div className="col-span-full bg-white p-20 rounded-3xl shadow-xl text-center border border-dashed border-ghibli-green/20">
-                 <BookOpen size={64} className="mx-auto text-ghibli-green/20 mb-6" />
-                 <h3 className="text-2xl font-bold text-ghibli-ink">ยังไม่มีบันทึกข้อมูลวิญญาณในขณะนี้</h3>
-                 <p className="text-ghibli-ink/40 mt-2">เชิญชวนเพื่อนๆ มาทำแบบทดสอบเพื่อเริ่มต้นการบันทึกสถิติ!</p>
-                 <Link href="/quiz">
-                    <button className="mt-8 ghibli-button px-10 py-4 text-lg">เริ่มต้นทำควิซ</button>
-                 </Link>
+                <BookOpen size={64} className="mx-auto text-ghibli-green/20 mb-6" />
+                <h3 className="text-2xl font-bold text-ghibli-ink">ยังไม่มีบันทึกข้อมูลวิญญาณในขณะนี้</h3>
+                <p className="text-ghibli-ink/40 mt-2">เชิญชวนเพื่อนๆ มาทำแบบทดสอบเพื่อเริ่มต้นการบันทึกสถิติ!</p>
+                <Link href="/quiz">
+                  <button className="mt-8 ghibli-button px-10 py-4 text-lg">เริ่มต้นทำควิซ</button>
+                </Link>
               </div>
             )}
           </div>
@@ -247,7 +246,7 @@ export default function DashboardPage() {
 
         {/* Footer info */}
         <div className="mt-20 text-center text-ghibli-ink/20 font-bold tracking-[0.3em] uppercase text-xs">
-            Soul Library Ecosystem v1.0 • Real-time Data
+          Soul Library Ecosystem v1.0 • Real-time Data
         </div>
       </div>
     </main>
